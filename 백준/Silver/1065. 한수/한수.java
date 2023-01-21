@@ -1,0 +1,27 @@
+import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int cnt = 0;
+        
+        if(N==1000){
+            N = 999;
+        }
+        
+        for(int i = 1; i <= N; i++){
+            if(i < 100){
+                cnt++;
+            } else {
+                int first = i % 10;
+                int second = i / 10 % 10;
+                int third = i / 100;
+         
+                if(third - second == second - first){
+                    cnt++;
+                }
+            }
+        }
+        System.out.println(cnt);
+    }
+}
