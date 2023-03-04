@@ -1,4 +1,3 @@
-// 설계시간 12분, 구현시간 48분
 package algoTest;
 import java.util.Scanner;
 
