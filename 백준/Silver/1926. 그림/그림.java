@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N, M;
+	static int N, M,area;
 	static int[] dr = {-1, 1, 0, 0};
 	static int[] dc = {0, 0, -1, 1};
 	static boolean[][] visited;
@@ -32,20 +32,22 @@ public class Main {
 				paper[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
+		int max = Integer.MIN_VALUE;
 		int art = 0;
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < M; j++) {
 				if(paper[i][j] == 1 && !visited[i][j]) {
+					area = 1;
 					bfs(i, j);
+					max = Math.max(max, area);
 					art++;
 				}
 			}
 		}
-		int max = Integer.MIN_VALUE;
-		for(int i : list) {
-			if(max < i) max = i;
-		}
+		
+//		for(int i : list) {
+//			if(max < i) max = i;
+//		}
 		System.out.println(art);
 		if(art == 0) System.out.println(0);
 		else System.out.println(max);
@@ -55,7 +57,7 @@ public class Main {
 		visited[x][y] = true;
 		Queue<int[]> q = new LinkedList<>();
 		q.add(new int[] {x, y});
-		int area = 1;
+//		int area = 1;
 		
 		while(!q.isEmpty()) {
 			int[] arr = q.poll();
@@ -75,6 +77,6 @@ public class Main {
 				}
 			}
 		}
-		list.add(area);
+//		list.add(area);
 	}
 }
