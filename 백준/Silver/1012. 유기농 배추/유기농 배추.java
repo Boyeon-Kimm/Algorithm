@@ -36,7 +36,8 @@ public class Main {
 			for(int i = 0; i < N; i++) {
 				for(int j = 0; j < M; j++) {
 					if(!visited[i][j] && farm[i][j] == 1) {
-						bfs(i, j);
+//						bfs(i, j);
+						dfs(i, j);
 						worm++;
 					}
 				}
@@ -44,29 +45,46 @@ public class Main {
 			System.out.println(worm);
 		}
 	}
-
-	private static void bfs(int x, int y) {
+	
+	private static void dfs(int x, int y) {
 		visited[x][y] = true;
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[] {x, y});
 		
-		while(!q.isEmpty()) {
-			int[] arr = q.poll();
-			int curX = arr[0];
-			int curY = arr[1];
+		for(int d = 0; d < 4; d++) {
+			int nr = dr[d] + x;
+			int nc = dc[d] + y;
 			
-			for(int d = 0; d < 4; d++) {
-				int nr = dr[d] + curX;
-				int nc = dc[d] + curY;
-				
-				if(nr < 0 || nr >= N || nc < 0 || nc >= M || visited[nr][nc]) continue;
-				
-				if(farm[nr][nc] == 1) {
-					visited[nr][nc] = true;
-					q.add(new int[] {nr, nc}); 
-				}
+			if(nr < 0 || nr >= N || nc < 0 || nc >= M || visited[nr][nc]) continue;
+			
+			if(farm[nr][nc] == 1) {
+				visited[nr][nc] = true;
+				dfs(nr, nc);
 			}
 		}
-		
 	}
+	
+
+//	private static void bfs(int x, int y) {
+//		visited[x][y] = true;
+//		Queue<int[]> q = new LinkedList<>();
+//		q.add(new int[] {x, y});
+//		
+//		while(!q.isEmpty()) {
+//			int[] arr = q.poll();
+//			int curX = arr[0];
+//			int curY = arr[1];
+//			
+//			for(int d = 0; d < 4; d++) {
+//				int nr = dr[d] + curX;
+//				int nc = dc[d] + curY;
+//				
+//				if(nr < 0 || nr >= N || nc < 0 || nc >= M || visited[nr][nc]) continue;
+//				
+//				if(farm[nr][nc] == 1) {
+//					visited[nr][nc] = true;
+//					q.add(new int[] {nr, nc}); 
+//				}
+//			}
+//		}
+//		
+//	}
 }
