@@ -1,87 +1,85 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Solution {
-	static int[] p;
-	static int[][] island;
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		
 		int T = sc.nextInt();
 		for(int tc = 1; tc <= T; tc++) {
 			int N = sc.nextInt();
-			island = new int[N][2];
-			
+			// 섬의 좌표를 입력받을 배열
+			int[][] island = new int[N][2];
+						
+			// 행 좌표
 			for(int i = 0; i < N; i++) {
 				island[i][0] = sc.nextInt();
 			}
-			
+			// 열 좌표
 			for(int i = 0; i < N; i++) {
 				island[i][1] = sc.nextInt();
 			}
-			
+			// 세율 입력
 			double E = sc.nextDouble();
 			
-			// makeset
-			p = new int[N];
+			List<Edge>[] adjList = new ArrayList[N];
+		
 			for(int i = 0; i < N; i++) {
-				p[i] = i;
+				adjList[i] = new ArrayList<>();
 			}
 			
-			PriorityQueue<Edge> pq = new PriorityQueue<>();
-			
 			for(int i = 0; i < N - 1; i++) {
-				for(int j = i + 1; j < N; j++) {
-					long dr = Math.abs(island[i][0] - island[j][0]);
-					long dc = Math.abs(island[i][1] - island[j][1]);
-					
-					pq.offer(new Edge(i, j, (dr * dr + dc * dc)));
+				for(int j = 1; j < N; j++) {
+					long r = Math.abs(island[i][0] - island[j][0]);
+					long c = Math.abs(island[i][1] - island[j][1]);
+				
+					adjList[i].add(new Edge(i, j, r * r + c * c));
+					adjList[j].add(new Edge(j, i, r * r + c * c));
 				}
 			}
 			
+			boolean[] visited = new boolean[N];
+			
+			PriorityQueue<Edge> pq = new PriorityQueue<>();
+			
+			visited[0] = true;
+			
+			pq.addAll(adjList[0]);
+			
 			int pick = 0;
-			double cost = 0;
+			long cost = 0;
+			
 			while(pick < N - 1) {
-				Edge edge = pq.poll();
-				int x = edge.x;
-				int y = edge.y;
+				Edge e = pq.poll();
+				if(visited[e.end]) continue;
 				
-				if(!union(x, y)) continue;
-				
-				cost += edge.d;
+				cost += e.d;
+				visited[e.end] = true;
 				pick++;
+				
+				pq.addAll(adjList[e.end]);
 			}
-			System.out.println("#" + tc + " " + Math.round(cost * E));
+			long res = Math.round(E * cost);
+			System.out.printf("#%d %d\n", tc, res);
 		}
 	}
 	
-	private static boolean union(int x, int y) {
-		if(findset(x) == findset(y)) 
-		return false;
-		
-		p[findset(y)] = findset(x);
-		return true;
-		
-	}
-	
-	private static int findset(int x) {
-		if(p[x] != x)
-			p[x] = findset(p[x]);
-		return p[x];
-	}
 	public static class Edge implements Comparable<Edge>{
-		int x, y;
+		int start, end;
 		long d;
 		
-		Edge(int x, int y, long d){
-			this.x = x;
-			this.y = y;
+		Edge(int start, int end, long d){
+			this.start = start;
+			this.end = end;
 			this.d = d;
 		}
 
 		@Override
 		public int compareTo(Edge o) {
-			return this.d < o.d ? -1 : 1;
+			return Long.compare(this.d, o.d);
 		}
 		
 	}
