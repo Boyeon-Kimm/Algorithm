@@ -14,24 +14,16 @@ public class Main {
 		String game = st.nextToken();
 		Set<String> set = new HashSet<>();
 		
+		for(int i = 0; i < N; i++) {
+			set.add(br.readLine());
+		}
+		
 		if(game.equals("Y")) {
-			for(int i = 0; i < N; i++) {
-				set.add(br.readLine());
-			}
 			System.out.println(set.size());
-			return;
-		} else if(game.equals("F")) {
-			for(int i = 0; i < N; i++) {
-				set.add(br.readLine());
-			}
+		} else if(game.equals("F")){
 			System.out.println(set.size() / 2);
-			return;
 		} else {
-			for(int i = 0; i < N; i++) {
-				set.add(br.readLine());
-			}
 			System.out.println(set.size() / 3);
-			return;
 		}
 	}
 }
