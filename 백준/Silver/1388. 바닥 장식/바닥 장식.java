@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		
+		char[][] floor = new char[N][M];
+		
+		for(int i = 0; i < N; i++) {
+			String str = br.readLine();
+			for(int j = 0; j < M; j++) {
+				floor[i][j] = str.charAt(j);
+			}
+		}
+		int cnt = 0;
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < M; j++) {
+				if(floor[i][j] == '-') {
+					if(j + 1 == M) cnt++;
+					else if(floor[i][j + 1] == '|' || j == M - 1){
+						cnt++;
+					}
+				}
+				
+				if(floor[i][j] == '|') {
+					if(i + 1 == N) cnt++;
+					else if (floor[i + 1][j] == '-' || i == N - 1) {
+						cnt++;
+					}
+				}
+			}
+		}
+		System.out.println(cnt);
+	}
+}
