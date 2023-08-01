@@ -1,20 +1,20 @@
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
+		int[] arr = new int[N];
 		
-		PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
 		for(int i = 0; i < N; i++) {
-			pq.add(sc.nextInt());
+			arr[i] = sc.nextInt();
 		}
+		Arrays.sort(arr);
 		StringBuilder sb = new StringBuilder();
 		
-		while(!pq.isEmpty()) {
-			sb.append(pq.poll()).append("\n");
+		for(int i = N - 1; i >= 0; i--) {
+			sb.append(arr[i]).append("\n");
 		}
 		System.out.println(sb);
 	}
